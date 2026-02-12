@@ -19,7 +19,6 @@
         }
 
         body {
-            /* Сложный градиент для имитации заката из видео */
             background: linear-gradient(
                 to bottom,
                 var(--bg-top) 0%,
@@ -40,7 +39,6 @@
             image-rendering: pixelated;
         }
 
-        /* Эффект пиксельной сетки поверх фона */
         body::after {
             content: "";
             position: absolute;
@@ -52,11 +50,9 @@
             z-index: -1;
         }
 
-        /* Общие стили для окон в стиле ретро-ОС */
         .window {
             background: var(--window-bg);
             border: 4px solid var(--window-border);
-            /* Пиксельная тень */
             box-shadow:
                 4px 4px 0px rgba(0,0,0,0.4),
                 inset -2px -2px 0px rgba(0,0,0,0.3),
@@ -66,6 +62,7 @@
             display: none;
             position: absolute;
             animation: popIn 0.3s ease-out;
+            z-index: 10;
         }
 
         .window-header {
@@ -85,7 +82,6 @@
             text-align: center;
         }
 
-        /* Экран логина */
         #login-screen { display: block; z-index: 100; }
 
         input {
@@ -120,7 +116,6 @@
             box-shadow: 1px 1px 0px rgba(0,0,0,0.4);
         }
 
-        /* Главное меню (папки) */
         .folder-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -145,7 +140,7 @@
             border-radius: 4px;
         }
 
-        /* ВСТРОЕННЫЕ ПИКСЕЛЬНЫЕ ИКОНКИ (Base64) */
+        /* ИКОНКИ */
         .pixel-icon {
             width: 48px;
             height: 48px;
@@ -162,7 +157,7 @@
         .icon-letter { background-image: url('icon-heart.png'); }
         .icon-heart  { background-image: url('icon-heart.png'); }
 
-        /* Стили для контента внутри папок */
+        /* Стили для ФОТО */
         .photo-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -180,82 +175,112 @@
             border: 2px solid #2c0e37;
             transition: transform 0.2s;
         }
-
-        .photo-frame:hover {
-            transform: rotate(0deg) scale(1.05);
-            z-index: 10;
-        }
-
-        .photo-frame:nth-child(even) {
-            transform: rotate(3deg);
-        }
-
-        .photo-frame:nth-child(even):hover {
-             transform: rotate(0deg) scale(1.05);
-        }
-
+        .photo-frame:hover { transform: rotate(0deg) scale(1.05); z-index: 10; }
+        .photo-frame:nth-child(even) { transform: rotate(3deg); }
+        .photo-frame:nth-child(even):hover { transform: rotate(0deg) scale(1.05); }
         .photo-frame img {
-            width: 100%;
-            height: 120px; /* Фиксированная высота для аккуратности */
-            object-fit: cover; /* Чтобы фото не сплющивались */
-            display: block;
-            border: 2px solid #2c0e37;
-            image-rendering: auto; /* Фотографии не должны быть пиксельными */
+            width: 100%; height: 120px; object-fit: cover; display: block; border: 2px solid #2c0e37;
         }
+
+        /* --- НОВЫЕ СТИЛИ ДЛЯ ПЛЕЕРА --- */
+        .player-ui {
+            background: #222;
+            padding: 20px;
+            border: 4px solid #555;
+            border-radius: 10px;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Виниловая пластинка */
+        .vinyl-record {
+            width: 120px;
+            height: 120px;
+            background: repeating-radial-gradient(
+              #111,
+              #111 5px,
+              #222 6px,
+              #222 7px
+            );
+            border-radius: 50%;
+            border: 4px solid #000;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            transition: transform 0.5s;
+        }
+
+        .vinyl-label {
+            width: 45px;
+            height: 45px;
+            background: var(--accent);
+            border-radius: 50%;
+            border: 2px solid #fff;
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cSearch DovL3d3dy53My5vcmcvM… on blockchair.comDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0id2hpdGUiPjxwYXRoIGQ9Ik0xMiAzdjEwLjU1Yy0uNTktLjM0LTEuMjctLjU1LTItLjU1bTAgMGMtMi4yMSAwLTQgMS43OS00IDRzMS43OSA0IDQgNCA0LTEuNzkgNC00VjNoNHY0aC00eiIvPjwvc3ZnPg==');
+            background-size: 60%;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        /* Анимация вращения */
+        .spinning {
+            animation: spin 3s linear infinite;
+        }
+
+        @keyframes spin {
+            100% { transform: rotate(360deg); }
+        }
+
+        .song-title {
+            color: #ff9a9e;
+            margin-bottom: 5px;
+            font-size: 10px;
+            text-transform: uppercase;
+        }
+        .song-artist {
+            color: #888;
+            font-size: 8px;
+            margin-bottom: 15px;
+        }
+
+        .controls-row {
+            display: flex;
+            gap: 10px;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .btn-play {
+            background: #00aa00;
+            border-color: #005500;
+            width: 100%;
+        }
+        .btn-pause {
+            background: #aa0000;
+            border-color: #550000;
+            display: none; /* Скрыта по умолчанию */
+            width: 100%;
+        }
+
+        /* --- КОНЕЦ СТИЛЕЙ ПЛЕЕРА --- */
 
         .letter-text {
-            text-align: left;
-            line-height: 1.6;
-            font-size: 10px;
-            max-height: 250px;
-            overflow-y: auto;
-            background: #fff;
-            padding: 15px;
-            border: 3px inset var(--window-border);
-            white-space: pre-wrap; /* Сохраняет переносы строк */
+            text-align: left; line-height: 1.6; font-size: 10px; max-height: 250px; overflow-y: auto; background: #fff; padding: 15px; border: 3px inset var(--window-border); white-space: pre-wrap;
         }
-
-        /* Стилизация скроллбара в стиле ретро */
         .letter-text::-webkit-scrollbar { width: 12px; }
         .letter-text::-webkit-scrollbar-track { background: var(--window-bg); border: 2px solid var(--window-border); }
         .letter-text::-webkit-scrollbar-thumb { background: var(--accent); border: 2px solid var(--window-border); }
 
-        .back-btn {
-            background: var(--window-border);
-            font-size: 10px;
-            margin-top: 20px;
-            padding: 10px 15px;
-        }
+        .back-btn { background: var(--window-border); font-size: 10px; margin-top: 20px; padding: 10px 15px; }
 
-        /* Анимация появления */
-        @keyframes popIn {
-            0% { transform: scale(0.5); opacity: 0; }
-            80% { transform: scale(1.05); opacity: 1; }
-            100% { transform: scale(1); }
-        }
-
-        .error-msg {
-            color: red;
-            font-size: 10px;
-            display: none;
-            margin-top: 15px;
-            text-shadow: 1px 1px 0px black;
-        }
-
-        /* Финальный экран */
-        .yes-btn {
-            font-size: 16px;
-            margin-top: 30px;
-            background: #ff3355;
-            animation: pulse 1.5s infinite;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-
+        @keyframes popIn { 0% { transform: scale(0.5); opacity: 0; } 80% { transform: scale(1.05); opacity: 1; } 100% { transform: scale(1); } }
+        .error-msg { color: red; font-size: 10px; display: none; margin-top: 15px; text-shadow: 1px 1px 0px black; }
+        .yes-btn { font-size: 16px; margin-top: 30px; background: #ff3355; animation: pulse 1.5s infinite; }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
     </style>
 </head>
 <body>
@@ -268,9 +293,8 @@
         <div class="window-content">
             <p style="font-size: 14px;">Добро пожаловать любимка</p>
             <p style="font-size: 10px; margin-bottom: 20px;">Введите данные для доступа к сердцу</p>
-
-            <input type="text" id="username" placeholder="Логин (Имя полное)">
-            <input type="password" id="password" placeholder="Пароль (ДД.ММ начала отношений)">
+            <input type="text" id="username" placeholder="Логин (Анастасия)">
+            <input type="password" id="password" placeholder="Пароль (12.05)">
             <button onclick="checkLogin()">ВОЙТИ</button>
             <p class="error-msg" id="error-msg">ОШИБКА ДОСТУПА!</p>
         </div>
@@ -311,20 +335,11 @@
         </div>
         <div class="window-content">
             <div class="photo-grid">
-                <div class="photo-frame">
-    <img src="foto1.jpg" alt="Мы на прогулке">
-         </div>
-        <div class="photo-frame">
-            <img src="foto2.jpg" alt="В кафе">
-          </div>
-          <div class="photo-frame">
-          <img src="foto3.jpg" alt="На море">
-          </div>
-<div class="photo-frame">
-    <img src="foto4.jpg" alt="Смешное фото">
-</div>
-</div>
-                </div>
+                <div class="photo-frame"><img src="foto1.jpg" alt="Мы на прогулке"></div>
+                <div class="photo-frame"><img src="foto2.jpg" alt="В кафе"></div>
+                <div class="photo-frame"><img src="foto3.jpg" alt="На море"></div>
+                <div class="photo-frame"><img src="foto4.jpg" alt="Смешное фото"></div>
+            </div>
             <button class="back-btn" onclick="closeWindow('photos')">< НАЗАД</button>
         </div>
     </div>
@@ -335,18 +350,21 @@
             <span onclick="closeWindow('music')" style="cursor:pointer; padding: 0 5px;">X</span>
         </div>
         <div class="window-content">
-            <div style="background: #2c0e37; color: #00ff00; padding: 15px; border: 3px inset var(--window-border); font-family: 'Courier New', monospace; text-align: left;">
-                <p>*** NOW PLAYING ***</p>
-                <p>> Твоя любимая песенка</p>
-                <p>Bitrate: 320kbps</p>
-                <br>
-                <audio controls autoplay>
-                    <source src="" type="audio/mpeg">
-                </audio>
-                <div style="height: 10px; background: #003300; width: 100%; margin: 10px 0; border: 1px solid #00ff00;">
-                     <div style="height:100%; width: 60%; background: #00ff00; animation: progress 10s linear infinite;"></div>
-                 </div>
+            <div class="player-ui">
+                <div class="vinyl-record" id="vinyl">
+                    <div class="vinyl-label"></div>
+                </div>
+                <div class="song-title">Marabu</div>
+                <div class="song-artist">ivanzolo2004</div>
+
+                <div class="controls-row">
+                    <button class="btn-play" id="playBtn" onclick="toggleMusic()">▶ PLAY</button>
+                    <button class="btn-pause" id="pauseBtn" onclick="toggleMusic()">II PAUSE</button>
+                </div>
             </div>
+
+            <audio id="audioPlayer" src="songlove.mp3" loop></audio>
+
             <button class="back-btn" onclick="closeWindow('music')">< НАЗАД</button>
         </div>
     </div>
@@ -377,10 +395,9 @@
         </div>
         <div class="window-content">
             <div style="background: #fff; padding: 20px; border: 3px inset var(--window-border);">
-                 <h2 style="line-height: 1.5; font-size: 14px;"> Настенка, ты будешь моей любимкой навсегда?</h2>
+                 <h2 style="line-height: 1.5; font-size: 14px;">Анастасия, ты будешь моей Валентинкой?</h2>
                  <p style="font-size: 8px; margin-top: 10px;">(Другие варианты ответа не предусмотрены системой)</p>
             </div>
-
             <div id="response-area">
                 <button class="yes-btn" onclick="sayYes()">[ ДА, КОНЕЧНО! ]</button>
             </div>
@@ -388,7 +405,6 @@
     </div>
 
     <script>
-        // ЛОГИКА ВХОДА (Можно поменять пароль тут)
         const CORRECT_LOGIN = 'Анастасия';
         const CORRECT_PASS = '12.05';
 
@@ -404,14 +420,32 @@
                     loginWin.style.display = 'none';
                     document.getElementById('main-menu').style.display = 'block';
                 }, 300);
-
             } else {
                 errorMsg.style.display = 'block';
-                // Эффект тряски при ошибке
                 loginWin.style.transform = 'translateX(10px)';
                 setTimeout(() => { loginWin.style.transform = 'translateX(-10px)'; }, 50);
                 setTimeout(() => { loginWin.style.transform = 'translateX(5px)'; }, 100);
                 setTimeout(() => { loginWin.style.transform = 'translateX(0)'; }, 150);
+            }
+        }
+
+        // Логика плеера
+        function toggleMusic() {
+            const audio = document.getElementById('audioPlayer');
+            const vinyl = document.getElementById('vinyl');
+            const playBtn = document.getElementById('playBtn');
+            const pauseBtn = document.getElementById('pauseBtn');
+
+            if (audio.paused) {
+                audio.play();
+                vinyl.classList.add('spinning'); // Запуск анимации
+                playBtn.style.display = 'none';
+                pauseBtn.style.display = 'block';
+            } else {
+                audio.pause();
+                vinyl.classList.remove('spinning'); // Остановка анимации
+                playBtn.style.display = 'block';
+                pauseBtn.style.display = 'none';
             }
         }
 
@@ -428,8 +462,6 @@
         function sayYes() {
             const area = document.getElementById('response-area');
             area.innerHTML = "<h2 style='color: var(--accent); margin-top: 20px;'>УРА! ❤️ Я ТЕБЯ ЛЮБЛЮ!</h2><p>Система перегрелась от любви...</p>";
-
-            // Интенсивный запуск сердечек
             for(let i=0; i<15; i++) { setTimeout(createHeart, i * 100); }
             setInterval(createHeart, 400);
         }
@@ -445,21 +477,13 @@
             const duration = Math.random() * 3 + 2;
             heart.style.animation = `fall ${duration}s linear forwards`;
             document.body.appendChild(heart);
-
             setTimeout(() => { heart.remove(); }, duration * 1000);
         }
 
         const styleSheet = document.createElement("style");
         styleSheet.innerText = `
-            @keyframes fall {
-                to { transform: translateY(110vh) rotate(720deg); }
-            }
-            @keyframes popOut {
-                 to { transform: scale(0); opacity: 0; }
-            }
-            @keyframes progress {
-                0% { width: 0%; } 100% { width: 100%; }
-            }
+            @keyframes fall { to { transform: translateY(110vh) rotate(720deg); } }
+            @keyframes popOut { to { transform: scale(0); opacity: 0; } }
         `;
         document.head.appendChild(styleSheet);
     </script>
